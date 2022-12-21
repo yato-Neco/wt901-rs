@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-struct WT901 {
+pub struct WT901 {
     pub ang: Option<(f32, f32, f32)>,
     pub mag: Option<(u32, u32, u32)>,
 }
