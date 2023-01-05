@@ -2,7 +2,7 @@
 
 
 
-This crate is for using YDLIDAR X2 in Rust.
+This crate is for using WT901 in Rust.
 
 ### Cargo.toml
 ```
