@@ -40,9 +40,9 @@ impl WT901 {
                     }
                     0x52 => {
                         self.gyro = Some((
-                            as_u32_le(&[data[2], data[3]]) as f32 / 32768.0 * 2000.0,
-                            as_u32_le(&[data[4], data[5]]) as f32 / 32768.0 * 2000.0,
-                            as_u32_le(&[data[6], data[7]]) as f32 / 32768.0 * 2000.0,
+                            as_u32_le(&[data[2], data[3]]) as f32 / (32768.0 * 2000.0),
+                            as_u32_le(&[data[4], data[5]]) as f32 / (32768.0 * 2000.0),
+                            as_u32_le(&[data[6], data[7]]) as f32 / (32768.0 * 2000.0),
                         ));
                     }
                     0x54 => {
