@@ -18,6 +18,8 @@ impl WT901 {
             mag: None,
         }
     }
+
+    #[inline]
     pub fn cope_serial_data(&mut self, serial_buf: Vec<u8>) {
         let mut data = VecDeque::from(serial_buf);
 
