@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 pub struct WT901 {
     pub acc: Option<(f32, f32, f32)>,
     pub gyro: Option<(f32, f32, f32)>,
@@ -9,6 +9,8 @@ pub struct WT901 {
 }
 
 impl WT901 {
+
+    #[inline]
     pub fn new() -> Self {
         Self {
             acc: None,
@@ -17,6 +19,8 @@ impl WT901 {
             mag: None,
         }
     }
+
+    #[inline]
     pub fn cope_serial_data(&mut self, serial_buf: Vec<u8>) {
         let mut data = VecDeque::from(serial_buf);
 
@@ -70,6 +74,9 @@ impl WT901 {
     }
 }
 
+
+
+#[inline]
 fn as_u32_le(array: &[u8; 2]) -> u32 {
     ((array[0] as u32) << 0) + ((array[1] as u32) << 8)
 }
