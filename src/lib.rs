@@ -1,15 +1,14 @@
 use std::collections::VecDeque;
 
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct WT901 {
     pub acc: Option<(f32, f32, f32)>,
     pub gyro: Option<(f32, f32, f32)>,
     pub ang: Option<(f32, f32, f32)>,
-    pub mag: Option<(u32, u32, u32)>,
+    pub mag: Option<(i16, i16, i16)>,
 }
 
 impl WT901 {
-
     #[inline]
     pub fn new() -> Self {
         Self {
@@ -37,32 +36,32 @@ impl WT901 {
                     0x50 => {}
                     0x51 => {
                         self.acc = Some((
-                            as_u32_le(&[data[2], data[3]]) as f32 / 32768.0 * 16.0,
-                            as_u32_le(&[data[4], data[5]]) as f32 / 32768.0 * 16.0,
-                            as_u32_le(&[data[6], data[7]]) as f32 / 32768.0 * 16.0,
+                            i16::from_le_bytes([data[2], data[3]]) as f32 / 32768.0 * 16.0,
+                            i16::from_le_bytes([data[4], data[5]]) as f32 / 32768.0 * 16.0,
+                            i16::from_le_bytes([data[6], data[7]]) as f32 / 32768.0 * 16.0,
                         ));
                     }
                     0x52 => {
                         self.gyro = Some((
-                            as_u32_le(&[data[2], data[3]]) as f32 / 32768.0 * 2000.0,
-                            as_u32_le(&[data[4], data[5]]) as f32 / 32768.0 * 2000.0,
-                            as_u32_le(&[data[6], data[7]]) as f32 / 32768.0 * 2000.0,
+                            i16::from_le_bytes([data[2], data[3]]) as f32 / 32768.0 * 2000.0,
+                            i16::from_le_bytes([data[4], data[5]]) as f32 / 32768.0 * 2000.0,
+                            i16::from_le_bytes([data[6], data[7]]) as f32 / 32768.0 * 2000.0,
                         ));
                     }
                     0x54 => {
                         //println!("mag_X: {:?}, mag_Y: {:?}, mag_Z: {:?}",);
 
                         self.mag = Some((
-                            as_u32_le(&[data[2], data[3]]),
-                            as_u32_le(&[data[4], data[5]]),
-                            as_u32_le(&[data[6], data[7]]),
+                            i16::from_le_bytes([data[2], data[3]]),
+                            i16::from_le_bytes([data[4], data[5]]),
+                            i16::from_le_bytes([data[6], data[7]]),
                         ));
                     }
                     0x53 => {
                         self.ang = Some((
-                            as_u32_le(&[data[2], data[3]]) as f32 / 32768.0 * 180.0,
-                            as_u32_le(&[data[4], data[5]]) as f32 / 32768.0 * 180.0,
-                            as_u32_le(&[data[6], data[7]]) as f32 / 32768.0 * 180.0,
+                            i16::from_le_bytes([data[2], data[3]]) as f32 / 32768.0 * 180.0,
+                            i16::from_le_bytes([data[4], data[5]]) as f32 / 32768.0 * 180.0,
+                            i16::from_le_bytes([data[6], data[7]]) as f32 / 32768.0 * 180.0,
                         ));
                         //println!("ang: {}, {}, {}",);
                     }
@@ -74,9 +73,3 @@ impl WT901 {
     }
 }
 
-
-
-#[inline]
-fn as_u32_le(array: &[u8; 2]) -> u32 {
-    ((array[0] as u32) << 0) + ((array[1] as u32) << 8)
-}
