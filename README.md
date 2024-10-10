@@ -8,6 +8,6 @@ This crate is for using WT901 in Rust.
 ```
 [dependencies]
 
-ydlidarx2-rs = { git = "https://github.com/yato-Neco/wt901-rs.git", branch = "master"}
+wt901-rs = { git = "https://github.com/yato-Neco/wt901-rs.git", branch = "master"}
 
 ```
